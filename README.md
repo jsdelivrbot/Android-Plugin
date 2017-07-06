@@ -31,7 +31,7 @@ dependencies {
 For example, to import our MotionDna maps support, use the following:
 
 ```gradle
-    compile 'com.navisens:motiondnaapi:0.0.0'
+    compile 'com.navisens:motiondnamaps:0.0.1'
 ```
 
 The source code for projects are also provided to allow for full customization.
