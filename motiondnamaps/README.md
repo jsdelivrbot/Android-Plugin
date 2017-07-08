@@ -34,6 +34,10 @@ The `R.id.content` is the id of the layout element you want to add the fragment 
 * It is recommended as an alternative to the above change, that you set the orientation of your app to portrait mode, as our SDK currently is most effective in the portrait mode state.
 * Note that `MotionDnaMaps` will automatically consume scroll events, so if you wish to include the map in a scroll layout, please add margins, or ensure that the map never covers the entire screen, as it will consume all scroll events, making it impossible to continue scrolling if it ever consumes the entire displable area of a scroll layout.
 
+## Video Tutorial
+
+Coming Soon!
+
 ## API
 
 As `MotionDnaMaps` is intended to be a quick placeholder not meant for full customization support in production environments, only some small control is provided for the developer. If you wish to customize, the source code is provided alongside this document.
