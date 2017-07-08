@@ -30,13 +30,24 @@ The `R.id.content` is the id of the layout element you want to add the fragment 
 ## Useful Information
 
 * Use `commitAllowingStateLoss` unless you wish to override and implement state saving of the fragment yourself.
-* It is recommended that you handle the `android:configChanges` of any layouts with the `MotionDnaMaps` object yourself (you can simply do nothing), to increase orientation change loading speeds. `MotionDnaMaps` will automatically save all data anytime a configuration change is detected (and the fragment restarted).
-* It is recommended as an alternative to the above change, that you fix the orientation of your app to portrait mode, as our SDK currently is most effective in the portrait mode state.
-* Note that `MotionDnaMaps` will automatically consume scroll events, so if you wish to include the map in a scroll layout, please add margins, or ensure that the map never covers the entire screen, as it will consume all scroll events, making it impossible to continue scrolling afterwards.
+* It is recommended that you handle the `android:configChanges` of any layouts with the `MotionDnaMaps` object yourself (you can simply do nothing), to increase orientation change loading speeds. When the screen state changes, the fragment will be destroyed and recreated as per Android requirements, and may take some time. `MotionDnaMaps` will automatically save all data anytime a configuration change is detected (and the fragment restarted). Handling orientations changes yourself will prevent the fragment from restarting (although `MotionDnaMaps` will still save everything on configuration changes).
+* It is recommended as an alternative to the above change, that you set the orientation of your app to portrait mode, as our SDK currently is most effective in the portrait mode state.
+* Note that `MotionDnaMaps` will automatically consume scroll events, so if you wish to include the map in a scroll layout, please add margins, or ensure that the map never covers the entire screen, as it will consume all scroll events, making it impossible to continue scrolling if it ever consumes the entire displable area of a scroll layout.
 
 ## API
 
 As `MotionDnaMaps` is intended to be a quick placeholder not meant for full customization support in production environments, only some small control is provided for the developer. If you wish to customize, the source code is provided alongside this document.
+
+## Setup
+
+Setup should be done all at once. Since setup functions return a reference of the `MotionDnaMaps` object, you can chain setup calls together.
+
+Example:
+```java
+MotionDnaMaps maps = new MotionDnaMaps(DEV_KEY)
+                         .addMap(MotionDnaMaps.Maps.OSM_Mapnik)
+                         .addControls();
+```
 
 #### `MotionDnaMaps(String devKey)`
 
