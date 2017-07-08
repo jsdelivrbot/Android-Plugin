@@ -57,10 +57,10 @@ Once you have created a `MotionDnaMaps` object, you can use it to call further s
 
 #### `MotionDnaMaps.Maps`
 
-These are the default tiling servers provided. You may use a custom tiling server instead with the [`addMap(url, json)`](motiondnamaps-addmapstring-url-string-jsonoptions) method instead.
+These are the default tiling servers provided. You may use a custom tiling server instead with the [`addMap(url, json)`](#motiondnamaps-addmapstring-url-string-jsonoptions) method instead.
 
  * `OSM_Mapnik`: Open Street Maps, does not require a key, no custom map style
- * `OSM_France`: Open Street Maps, does not require a key, custom map style is France, slighty higher zoom compared to {@link #OSM_Mapnik}
+ * `OSM_France`: Open Street Maps, does not require a key, custom map style is France, slighty higher zoom compared to OSM_Mapnik
  * `Thunderforest`: Thunderforest tiling servers, requires a key, default style is 'outdoors'
  * `Mapbox`: Mapbox tiling servers, requires a key, default style is 'mapbox.streets'
  * `Esri`: Esri tiling servers, not fully implemented yet, current access does not require key, but has missing tiles at high zooms
@@ -71,7 +71,7 @@ Use this to add a basic map which does not require additional setup fields. Supp
 
 #### `MotionDnaMaps addMap(MotionDnaMaps.Maps name, String key)`
 
-Use this to add a map which requires an access key. Valid maps are `Thunderforest` and `Mapbox`. A default styling will be selected. To specify a custom styling, use [`addMap(name, key, mapid)`](motiondnamaps-addmapmotiondnamapsmaps-name-string-key-string-mapid)
+Use this to add a map which requires an access key. Valid maps are `Thunderforest` and `Mapbox`. A default styling will be selected. To specify a custom styling, use [`addMap(name, key, mapid)`](#motiondnamaps-addmapmotiondnamapsmaps-name-string-key-string-mapid)
 
 #### `MotionDnaMaps addMap(MotionDnaMaps.Maps name, String key, String mapid)`
 
@@ -102,7 +102,7 @@ Use this to enable the user to control more features on the map. If this method 
 * View all data points
 * View stats on their movement (e.g. how long they stood still)
 
-Note that this method will not do anything if you also call [`useLocalOnly()`](motiondnamaps-uselocalonly).
+Note that this method will not do anything if you also call [`useLocalOnly()`](#motiondnamaps-uselocalonly).
 
 #### `MotionDnaMaps preventRestart()`
 
@@ -114,19 +114,19 @@ Note: This is a dangerous method to call, as it prevents cleaning up of browser 
 
 This will set navigation to local cartesian coordinates, preventing usage of GPS localization. Furthermore, no default map will be added.
 
-You can use the custom [`addMap(url, json)`](motiondnamaps-addmapstring-url-string-jsonoptions) with this to set custom map tiles that better reflect local coordinates (for example an open grid or virtual world).
+You can use the custom [`addMap(url, json)`](#motiondnamaps-addmapstring-url-string-jsonoptions) with this to set custom map tiles that better reflect local coordinates (for example an open grid or virtual world).
 
-Note: the [`addControls()`](motiondnamaps-addcontrols) will be disabled when local coordinates are enabled, preventing the user from setting a custom location and heading.
+Note: the [`addControls()`](#motiondnamaps-addcontrols) will be disabled when local coordinates are enabled, preventing the user from setting a custom location and heading.
 
 ## State Changes
 
-The following methods are used to control the state of the maps object, and will return whether they executed successfully. They always will, unless an invalid state is reached (for example trying to call [`resume()`](boolean-resume) after calling [`stop()`](void-stop)
+The following methods are used to control the state of the maps object, and will return whether they executed successfully. They always will, unless an invalid state is reached (for example trying to call [`resume()`](#boolean-resume) after calling [`stop()`](#void-stop)
 
 #### `boolean pause()`
 
 Pauses the MotionDna algorithm, which can save battery when not in use, but remembers the user's last location, heading, etc. (as opposed to stopping the algorithm alltogether).
 
-Use [`resume()`](boolean-pause) to resume the algorithm.
+Use [`resume()`](#boolean-pause) to resume the algorithm.
 
 #### `boolean resume()`
 
