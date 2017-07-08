@@ -2,6 +2,8 @@
 
 This repo adds support for additional features on top of our [MotionDna SDK](https://github.com/navisens/Android-SDK) that can be used when building Android applications.
 
+Make sure to complete setup of the Android SDK before proceeding with installing plugins.
+
 ## Setup
 
 Plugins are compiled into your project by including the following repository in your project `build.gradle`
