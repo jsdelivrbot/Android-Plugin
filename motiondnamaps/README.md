@@ -4,7 +4,7 @@ This is a plugin that provides a quick-and-easy map built upon [leafletjs](http:
 
 The latest stable version is `0.1.1`.
 
-To include the plugin in your code, add the following to your app's buildscript:
+To include the plugin in your code, add the following to your app's dependencies:
 
 ```gradle
     compile 'com.navisens:motiondnamaps:0.1.1'
