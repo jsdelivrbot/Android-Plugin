@@ -30,13 +30,13 @@ dependencies {
 }
 ```
 
-For example, to import our MotionDna maps support, use the following:
+For example, to import version 0.0.2 of our MotionDna maps plugin, use the following:
 
 ```gradle
-    compile 'com.navisens:motiondnamaps:0.0.1'
+    compile 'com.navisens:motiondnamaps:0.0.2'
 ```
 
-The source code for projects are also provided to allow for full customization.
+The source code for projects is also provided to allow for full customization.
 
 ## Plugins
 
@@ -44,7 +44,7 @@ The following is a list of all supported plugins. Special setup instructions and
 
 #### [MotionDna maps](motiondnamaps)
 
-Quick and easy maps support
+Quick and easy maps support built upon [leafletjs](http://leafletjs.com)
 
 #### Coming soon...
 
