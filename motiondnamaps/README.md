@@ -77,7 +77,7 @@ Use this to add a map which requires an access key. Valid maps are `Thunderfores
 
 Use this to add a map which requires an access key, and specify a custom map theme.
 
-#### `MotionDnaMaps addMap (String url, String jsonOptions)`
+#### `MotionDnaMaps addMap(String url, String jsonOptions)`
 
 Use this to add a custom map tiling server.
 
