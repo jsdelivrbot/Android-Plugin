@@ -44,7 +44,7 @@ As `MotionDnaMaps` is intended to be a quick placeholder not meant for full cust
 
 ## Setup
 
-Setup should be done all at once. Since setup functions return a reference of the `MotionDnaMaps` object, you can chain setup calls together.
+Setup should be done all at once. Since setup functions return a reference of the `MotionDnaMaps` object, you can chain setup calls together. All setup calls should be invoked before the maps fragment is added to any layout, as the setup properties apply only once upon creating the View that the `MotionDnaMaps` Fragment holds.
 
 Example:
 ```java
