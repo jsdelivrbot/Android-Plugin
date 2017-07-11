@@ -53,7 +53,7 @@ The `R.id.content` is the id of the layout element you want to add the fragment 
 * When controls are enabled, click the gear icon to begin initializing your location. Alternatively, clicking-and-holding on any point on the map will also initiate the process at the touched location.
     * When setting location, tap anywhere to set location or drag the marker to desired starting location. If you get lost, use the &target; (target) icon.
     * Click the &check; (check) icon to confirm.
-    * Alternatively, click the X icon to cancel.
+    * Alternatively, click the &cross; (cross) icon to cancel.
     * You can also click the marker icon (used to be the gear icon) to switch instead to initializing heading and discard changes to location.
 * After location has been set, or the user decides to skip setting the location, a new mode will start for setting the heading.
     * Drag the circle to rotate the ghost user.
