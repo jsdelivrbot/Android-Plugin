@@ -36,7 +36,7 @@ The `R.id.content` is the id of the layout element you want to add the fragment 
 
 ## Video Tutorial
 
-Coming Soon!
+[![https://youtu.be/kOEmLzMTyZE](http://i.imgur.com/H1Lwbnm.png)](https://youtu.be/kOEmLzMTyZE)
 
 ## Using the Interface
 
