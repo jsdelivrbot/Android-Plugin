@@ -38,6 +38,49 @@ The `R.id.content` is the id of the layout element you want to add the fragment 
 
 Coming Soon!
 
+## Using the Interface
+
+#### Leaflet Basics
+
+* Navigate map by tap-and-dragging.
+
+* Zoom using two fingers or the zoom controls at top left.
+
+#### Buttons
+
+* Use the &target; (target) icon to center the map on the user or other relevant points of interest.
+
+* When controls are enabled, click the gear icon to begin initializing your location. Alternatively, clicking-and-holding on any point on the map will also initiate the process at the touched location.
+    * When setting location, tap anywhere to set location or drag the marker to desired starting location. If you get lost, use the &target; (target) icon.
+    * Click the &check; (check) icon to confirm.
+    * Alternatively, click the X icon to cancel.
+    * You can also click the marker icon (used to be the gear icon) to switch instead to initializing heading and discard changes to location.
+* After location has been set, or the user decides to skip setting the location, a new mode will start for setting the heading.
+    * Drag the circle to rotate the ghost user.
+    * Alternatively, tap anywhere to set a marker, and the user will automatically face the location. Move the marker as normal.
+    * Finally, after selecting a heading, make sure the physical phone is aligned to the desired direction such that the top points in the direction. Then confirm the new rotation.
+    
+#### Markers
+
+* Tapping any marker will zoom into it.
+
+* When controls are enabled, tapping a marker again will expand it's stats. See below on how to interpret these.
+    * Tap again to hide, or zoom out to hide all.
+
+#### Interpretation
+
+* The heading pointer changes color depending on the current detected motion.
+
+* All markers also display the distribution of motions at a certain location.
+
+* For detailed marker information, percentage of motions are displayed, as well as the total number of samples while the user was at the same location.
+
+* Red indicates that the user is fidgetting (standing still with the phone in their hand)
+
+* Green indicates that the user is walking
+
+* Blue indicates that the user is no longer holding the phone and it is stationary
+
 ## API
 
 As `MotionDnaMaps` is intended to be a quick placeholder not meant for full customization support in production environments, only some small control is provided for the developer. If you wish to customize, the source code is provided alongside this document.
