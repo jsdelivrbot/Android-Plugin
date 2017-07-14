@@ -1,5 +1,5 @@
 // TODO ? double tap does not work
-
+// TODO local mode should turn off gps
 
 
 
@@ -49,7 +49,8 @@ function SET(key, item, compress) {
     var value = JSON.stringify(item);
     if (compress)
         value = LZString.compress(value);
-    console.log('setting ' + key + ' to ' + value);
+    // DEPLOY
+    // console.log('setting ' + key + ' to ' + value);
     try {
         localStorage.setItem(key, value);
         overflowed = false;
@@ -97,7 +98,7 @@ function SAVE() {
         SET('point.' + points, allPoints, true);
     }
 
-    console.log("SAVED: " + GET('NAVISENS_JAVASCRIPT_INITIALIZATION_COMPLETE'));
+    // console.log("SAVED: " + GET('NAVISENS_JAVASCRIPT_INITIALIZATION_COMPLETE'));
 }
 
 function STOP() {
@@ -126,11 +127,13 @@ var colors = ['#ff4b00', '#bac900', '#EC1813', '#55BCBE', '#D2204C', '#FF0000', 
 // ===== INTERFACE =====
 
 var simpleMode = false;
+var clusterMode = true;
 
 var map = null;
 var user = null;
 var polyline = null;
 var allPoints = null;
+var recentPoint = null;
 var recentPoints = null;
 
 var currentColor = 0;
@@ -877,6 +880,10 @@ setSimple = function() {
     simpleMode = true; // hack - currently local does not support ui
 }
 
+hideClustering = function() {
+    clusterMode = false;
+}
+
 move = function(x, y, heading, category) {
     user.setLatLng([x, y]);
     userIcon.category = category;
@@ -912,37 +919,45 @@ addPoint = function(x, y, category) {
         }
     }
     if (overflowed) return;
-    if (recentPoints.point && recentPoints.point.equals([x, y], MIN_DISTANCE)) {
-        if (category in recentPoints.markers) {
-            recentPoints.markers[category].weight++;
+    if (clusterMode) {
+        if (recentPoints.point && recentPoints.point.equals([x, y], MIN_DISTANCE)) {
+            if (category in recentPoints.markers) {
+                recentPoints.markers[category].weight++;
+            } else {
+                var marker = new PruneCluster.Marker(x, y);
+                marker.category = category;
+                marker.weight = 1;
+                pruneCluster.RegisterMarker(marker);
+                recentPoints.markers[category] = marker;
+                polyline.addLatLng([x, y]);
+            }
+            pruneCluster.ProcessView();
         } else {
+            if (recentPoints.point) {
+                var point = {'p': recentPoints.point, 'd': []};
+                for (var i = 0, l = MOTIONS.length; i < l; i++)
+                    if (recentPoints.markers[i])
+                        point.d.push({'c': recentPoints.markers[i].category, 'w': recentPoints.markers[i].weight});
+                allPoints.push(point)
+            }
+
             var marker = new PruneCluster.Marker(x, y);
             marker.category = category;
             marker.weight = 1;
             pruneCluster.RegisterMarker(marker);
+            pruneCluster.ProcessView();
+            polyline.addLatLng([x, y]);
+
+            recentPoints.point = L.point(x, y);
+            recentPoints.markers = [];
             recentPoints.markers[category] = marker;
+        }
+    } else {
+        if (!recentPoint || !recentPoint.equals([x, y], MIN_DISTANCE)) {
+            recentPoint = L.point(x, y);
+
             polyline.addLatLng([x, y]);
         }
-        pruneCluster.ProcessView();
-    } else {
-        if (recentPoints.point) {
-            var point = {'p': recentPoints.point, 'd': []};
-            for (var i = 0, l = MOTIONS.length; i < l; i++)
-                if (recentPoints.markers[i])
-                    point.d.push({'c': recentPoints.markers[i].category, 'w': recentPoints.markers[i].weight});
-            allPoints.push(point)
-        }
-
-        var marker = new PruneCluster.Marker(x, y);
-        marker.category = category;
-        marker.weight = 1;
-        pruneCluster.RegisterMarker(marker);
-        pruneCluster.ProcessView();
-        polyline.addLatLng([x, y]);
-
-        recentPoints.point = L.point(x, y);
-        recentPoints.markers = [];
-        recentPoints.markers[category] = marker;
     }
 };
 
@@ -1012,7 +1027,7 @@ function RUN(needsGPS) {
     if (needsGPS)
         awaitGPS();
 
-    console.log("Loaded JS");
+    // console.log("Loaded JS");
 
     SESSION_RELOADED = true;
 }

@@ -35,6 +35,8 @@ import java.util.Locale;
  */
 
 public class MotionDnaMaps extends Fragment {
+    // TODO: test if GPS faster when pass into js as map center
+    // https://stackoverflow.com/questions/10524381/gps-android-get-positioning-only-once
 
     /**
      * Usable map types are:
@@ -305,6 +307,16 @@ public class MotionDnaMaps extends Fragment {
     }
 
     /**
+     * Hide plotting markers, and prevent user from accessing
+     * @return a reference to this object
+     */
+    @SuppressWarnings("unused")
+    public MotionDnaMaps hideMarkers () {
+        motionDnaService.appendJS("hideClustering()");
+        return this;
+    }
+
+    /**
      * Pause the location services
      * @return whether location services were paused successfully
      */
@@ -409,7 +421,7 @@ public class MotionDnaMaps extends Fragment {
                     x = location.localLocation.x * LOCAL_SCALING;
                     y = location.localLocation.y * LOCAL_SCALING;
                     h = location.heading;
-                    System.out.println(x + ", " + y + ", " + h);
+                    // System.out.println(x + ", " + y + ", " + h);
                     this.webview.evaluateJavascript(
                             String.format(Locale.ENGLISH, "if (typeof SESSION_RELOADED !== 'undefined') addPoint(%.7f, %.7f, %d);",
                                     y,
