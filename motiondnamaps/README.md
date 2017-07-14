@@ -2,12 +2,12 @@
 
 This is a plugin that provides a quick-and-easy map built upon [leafletjs](http://leafletjs.com/).
 
-The latest stable version is `0.1.1`.
+The latest stable version is `0.2.0`.
 
 To include the plugin in your code, add the following to your app's dependencies:
 
 ```gradle
-    compile 'com.navisens:motiondnamaps:0.1.1'
+    compile 'com.navisens:motiondnamaps:0.2.0'
 ```
 
 ## Setup
@@ -166,6 +166,12 @@ This will set navigation to local cartesian coordinates, preventing usage of GPS
 You can use the custom [`addMap(url, json)`](#motiondnamaps-addmapstring-url-string-jsonoptions) with this to set custom map tiles that better reflect local coordinates (for example an open grid or virtual world).
 
 Note: the [`addControls()`](#motiondnamaps-addcontrols) will be disabled when local coordinates are enabled, preventing the user from setting a custom location and heading.
+
+#### `MotionDnaMaps hideMarkers()`
+
+Hides the colored markers, so only a line will appear on the screen, and no stats will be visible (or stored). The arrow will still display the most recent movement types detected.
+
+Will function with [`addConstrols()`](#motiondnamaps-addcontrols), by allowing users to set location as normal, but no longer view marker stats.
 
 ## State Changes
 
