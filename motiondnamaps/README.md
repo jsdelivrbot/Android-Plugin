@@ -38,6 +38,8 @@ The `R.id.content` is the id of the layout element you want to add the fragment 
 
 [![https://youtu.be/kOEmLzMTyZE](http://i.imgur.com/H1Lwbnm.png)](https://youtu.be/kOEmLzMTyZE)
 
+Please note that the demo is not meant to show best coding practices , and the setup is only meant as a demo for using the Maps plugin.
+
 ## Using the Interface
 
 #### Leaflet Basics
