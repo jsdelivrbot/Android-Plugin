@@ -2,12 +2,12 @@
 
 This is a plugin that provides a quick-and-easy map built upon [leafletjs](http://leafletjs.com/).
 
-The latest stable version is `0.2.0`.
+The latest stable version is `0.2.1`.
 
 To include the plugin in your code, add the following to your app's dependencies:
 
 ```gradle
-    compile 'com.navisens:motiondnamaps:0.2.0'
+    compile 'com.navisens:motiondnamaps:0.2.1'
 ```
 
 ## Setup
