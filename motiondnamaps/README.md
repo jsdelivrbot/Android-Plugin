@@ -136,7 +136,7 @@ Use this to add a custom map tiling server.
 Example:
 ```java
 addMap("http://{s}.tile.thunderforest.com/outdoors/{z}/{x}/{y}.png?apikey={apikey}", "{
-    apikey: "/* THUNDERFOREST KEY */"
+    apikey: '/* THUNDERFOREST KEY */'
 }");
 ```
 
