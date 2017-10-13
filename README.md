@@ -20,20 +20,22 @@ allprojects {
 }
 ```
 
-Then simply import the desired plugin (see below for full list) by adding any dependency with the format
+Then simply import `NavisensCore` along with any desired plugins (see below for full list) by adding any dependency with the format
 
 ```gradle
 dependencies {
+    compile 'com.navisens:navisenscore:<version>'
     compile 'com.navisens:<plugin name>:<version>'
     
     // ...
 }
 ```
 
-For example, to import version 0.0.2 of our MotionDna maps plugin, use the following:
+For example, to import version 0.0.6 of our `NavisensMaps` plugin, use the following:
 
 ```gradle
-    compile 'com.navisens:motiondnamaps:0.0.2'
+    compile 'com.navisens:navisenscore:2.0.1'
+    compile 'com.navisens:motiondnamaps:0.0.6'
 ```
 
 The source code for projects is also provided to allow for full customization.
@@ -42,7 +44,7 @@ The source code for projects is also provided to allow for full customization.
 
 The following is a list of all supported plugins. Special setup instructions and relevant stable version numbers linked.
 
-#### [MotionDna maps](motiondnamaps)
+#### [Navisens Maps](navisensmaps)
 
 Quick and easy maps support built upon [leafletjs](http://leafletjs.com)
 
