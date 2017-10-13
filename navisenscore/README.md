@@ -41,6 +41,7 @@ protected void onCreate(Bundle savedInstanceState) {
                                 .useLocalOnly()
                                 .enableLocationSharing();
   // Notice that we can call methods of NavisensMaps directly after initializing!
+}
 ```
 
 #### `boolean stop()`
