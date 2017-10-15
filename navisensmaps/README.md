@@ -12,9 +12,16 @@ To include the plugin in your code, add the following to your app's dependencies
 
 ## Setup
 
-1. Set up [`NavisensCore`](navisenscore). No further setup is necessary for this plugin!
+1. Set up [`NavisensCore`](navisenscore).
 
-2. The `NavisensMaps` is a fragment, and thus can be added into any activity as you would a fragment. For example, in the `onCreate` function, add this:
+2. Add the following to your Manifest:
+```xml
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+```
+
+3. The `NavisensMaps` is a fragment, and thus can be added into any activity as you would a fragment. For example, in the `onCreate` function, add this:
 ```java
     NavisensMaps maps = core.init(NavisensMaps.class);
     getFragmentManager().beginTransaction().replace(R.id.content, maps).addToBackStack(null).commitAllowingStateLoss();
