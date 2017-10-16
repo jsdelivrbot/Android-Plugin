@@ -169,9 +169,9 @@ Hides the colored markers, so only a line will appear on the screen, and no stat
 
 Will function with [`addConstrols()`](#navisensmaps-addcontrols), by allowing users to set location as normal, but no longer view marker stats.
 
-#### `NavisensMaps debug()`
+#### `NavisensMaps showPath()`
 
-The central function for enabling any marker or trail display. By default, this is disabled, and so no markers or trails are rendered.
+The central function for enabling any marker and trail display. By default, this is disabled, and so no markers or trails are rendered. Use `hideMarkers` to only display the trail and no markers. For more custom behavior, please feel free to modify the main javascript files and add your own functions as desired.
 
 ## State Changes
 
