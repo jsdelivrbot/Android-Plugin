@@ -167,7 +167,7 @@ Note: the [`addControls()`](#navisensmaps-addcontrols) will be disabled when loc
 
 Hides the colored markers, so only a line will appear on the screen, and no stats will be visible (or stored). The arrow will still display the most recent movement types detected.
 
-Will function with [`addConstrols()`](#navisensmaps-addcontrols), by allowing users to set location as normal, but no longer view marker stats.
+Will function with [`addControls()`](#navisensmaps-addcontrols), by allowing users to set location as normal, but no longer view marker stats.
 
 #### `NavisensMaps showPath()`
 
