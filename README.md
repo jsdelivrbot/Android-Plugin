@@ -35,7 +35,7 @@ For example, to import version 0.0.6 of our `NavisensMaps` plugin, use the follo
 
 ```gradle
     compile 'com.navisens:navisenscore:2.0.1'
-    compile 'com.navisens:motiondnamaps:0.0.6'
+    compile 'com.navisens:navisensmaps:0.0.6'
 ```
 
 The source code for projects is also provided to allow for full customization.
