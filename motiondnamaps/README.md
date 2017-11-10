@@ -4,7 +4,7 @@
 - Warning: Development of MotionDnaMaps has been discontinued.
 - Please use the new NavisensMaps plugin!
 ```
-[NavisensMaps Plugin here](navisensmaps)
+[NavisensMaps Plugin here](/navisensmaps)
 
 This is a plugin that provides a quick-and-easy map built upon [leafletjs](http://leafletjs.com/).
 
