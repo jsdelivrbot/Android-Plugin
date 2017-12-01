@@ -40,6 +40,10 @@ For example, to import version 0.0.6 of our `NavisensMaps` plugin, use the follo
 
 The source code for projects is also provided to allow for full customization.
 
+## Core
+
+You must have the **[Navisens Core](navisenscore)** set up before you can use any plugins.
+
 ## Plugins
 
 The following is a list of all supported plugins. Special setup instructions and relevant stable version numbers linked.
