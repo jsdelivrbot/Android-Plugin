@@ -4,7 +4,7 @@ This plugin helps make doing location sharing and other networking tasks easier.
 
 The latest stable version is `0.1.0`, and it is built on top of Android SDK version `1.0.0-SNAPSHOT`.
 
-Add the following to your app's dependencies preferably below other plugins:
+Add the following to your app's dependencies:
 
 ```gradle
     compile 'com.navisens:navishare:0.1.0'
