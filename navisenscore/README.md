@@ -4,6 +4,13 @@ This is the core upon which all other Navisens Plugins are built on. The `Navise
 
 The latest stable version is `2.0.2`, and it is built on top of Android SDK version `1.0.0-SNAPSHOT`.
 
+Add the following to your app's dependencies above all other plugins:
+
+```gradle
+    compile 'com.navisens:navisenscore:2.0.2'
+    // compile '<other Navisens Plugins>'
+```
+
 ## Setup
 
 1. All setup is done on the [main plugins page](https://github.com/navisens/Android-Plugin).
