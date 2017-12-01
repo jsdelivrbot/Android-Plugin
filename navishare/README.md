@@ -17,7 +17,7 @@ Add the following to your app's dependencies preferably below other plugins:
 
 ## API
 
-`NaviShare` is built assuming you are connecting to one of our servers.
+`NaviShare` is built assuming you are connecting to one of our servers, whether we or you are hosting it.
 
 When you use `NaviShare`, you are connecting a device to a **room**. A **room** is an abstraction which represents a group of devices which are able to talk to each other. Devices not connected to the same room are not able to communicate with each other, while devices within the same room may.
 
