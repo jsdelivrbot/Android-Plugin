@@ -45,7 +45,7 @@ These methods facilitate connecting to servers for sharing location.
 
 #### `void configure(String host, String port)`
 
-You must configure `NaviShare` to point to the host and port of the server. If you don't do this, the `connect` function will not work. You may use `testConnect` during testing if you do not wish to set up a server at this time. This function will not start and services, and you must still make a call to `connect` before location sharing will start.
+You must configure `NaviShare` to point to the host and port of the server. If you don't do this, the `connect` function will not work. You may use `testConnect` during testing if you do not wish to set up a server at this time. This function will not start any services, and you must still make a call to `connect` before location sharing will start.
 
 #### `boolean connect(String room)`
 
