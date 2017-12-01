@@ -2,19 +2,19 @@
 
 This is a plugin that provides a quick-and-easy map built upon [leafletjs](http://leafletjs.com/).
 
-The latest stable version is `0.0.9`.
+The latest stable version is `0.0.10`, and it is built on top of Android SDK version `1.0.0-SNAPSHOT`.
 
 To include the plugin in your code, add the following to your app's dependencies:
 
 ```gradle
-    compile 'com.navisens:navisensmaps:0.0.9'
+    compile 'com.navisens:navisensmaps:0.0.10'
 ```
 
 ## Setup
 
 1. Set up [`NavisensCore`](navisenscore).
 
-2. Add the following to your Manifest:
+2. (Optionally) Add the following to your Manifest:
 ```xml
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
