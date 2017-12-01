@@ -52,10 +52,6 @@ The following is a list of all supported plugins. Special setup instructions and
 
 Quick and easy maps support built upon [leafletjs](http://leafletjs.com)
 
-#### Coming soon...
+#### [NaviShare](navishare)
 
-Summary info
-
-#### Coming soon too...
-
-Summary info again
+Wrapper which makes it easy to connect to servers and share location or even raw data between devices.
