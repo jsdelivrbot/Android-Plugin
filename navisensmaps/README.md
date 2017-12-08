@@ -98,7 +98,7 @@ NavisensMaps maps = core.init(NavisensMaps.class)
 
 #### `NavisensMaps init(NavisensCore core)`
 
-**Do not call this function!** This is how `NavisensMaps` is initialized via the `NavisensCore`. If you aren't sure how to add plugins, please first read the setup for [`NavisensCore`](navisenscore). `NavisensMaps` is a fragment. If you are not familiar with how fragments work, please review the documentation provided on the [Android page](https://developer.android.com/guide/components/fragments.html).
+**Do not call this function!** This is how `NavisensMaps` is initialized via the `NavisensCore`. If you aren't sure how to add plugins, please first read the setup for [`NavisensCore`](/navisenscore). `NavisensMaps` is a fragment. If you are not familiar with how fragments work, please review the documentation provided on the [Android page](https://developer.android.com/guide/components/fragments.html).
 
 Once you have initialized a `NavisensMaps` object, you can use it to call further setup functions. Make sure to call all setup functions upon object creation. If you try to invoke a setup function while the fragment is in display, you will need to restart the fragment for those changes to take effect.
 
