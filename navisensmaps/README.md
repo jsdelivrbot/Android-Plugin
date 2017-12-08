@@ -29,6 +29,8 @@ To include the plugin in your code, add the following to your app's dependencies
 
 The `R.id.content` is the id of the layout element you want to add the fragment into.
 
+If you aren't sure how to do some of these, or aren't that familiar with Android Studio, check out the recommended [Android quick start guide here](https://github.com/navisens/NaviDocs/blob/master/BEER.Android.md)
+
 ## Useful Information
 
 * Use `commitAllowingStateLoss` unless you wish to override and implement state saving of the fragment yourself.
