@@ -82,7 +82,7 @@ function START() {
 function SAVE() {
     SET('coords', map.getCenter());
     SET('zoom', map.getZoom());
-    SET('usercoords', user.getLatLng());
+    SET('usercoords', users[userID][0].getLatLng());
     var points = GET('points') - 1;
 
     if (recentPoints.point) {
@@ -984,7 +984,6 @@ move = function(id, x, y, heading, category) {
 };
 
 addPoint = function(id, x, y, category) {
-    console.log(!debug + ',' + (id != userID));
     if (!debug || id != userID) return;
     if (volatileLocation) {
         if (volatileLocation.distanceTo([x, y]) < volatileDistance || volatileSamples > MAX_SAMPLES) {

@@ -163,7 +163,7 @@ public class NavisensMaps extends Fragment implements NavisensPlugin {
         webSettings.setDomStorageEnabled(true);
         webView.addJavascriptInterface(new JavaScriptInterface(), "JSInterface");
 
-        webView.loadUrl("file:///android_asset/index.html");
+        webView.loadUrl("file:///android_asset/index.0.0.9.html");
 
         this.setRetainInstance(true);
 
@@ -399,11 +399,11 @@ public class NavisensMaps extends Fragment implements NavisensPlugin {
     }
 
     /**
-     * Enable debug mode to display stats and metrics
-     * @return whether debug worked
+     * Display paths and markers
+     * @return whether displaying paths worked
      */
     @SuppressWarnings("unused")
-    public NavisensMaps debug() {
+    public NavisensMaps showPath() {
         appendJS("DEBUG();");
         return this;
     }
@@ -434,6 +434,10 @@ public class NavisensMaps extends Fragment implements NavisensPlugin {
         if (this.webview != null) {
             MotionDna.Location location = motionDna.getLocation();
 
+            if (motionDna.getMotion() != null) System.out.printf("%s(%s): %s\n", motionDna.getDeviceName(), motionDna.getID(), motionDna.getMotion().motionType);
+            if (motionDna.getMotion() == null || motionDna.getMotion().motionType == null) {
+                return;
+            }
             if (useLocal) {
                 x = location.localLocation.x * LOCAL_SCALING;
                 y = location.localLocation.y * LOCAL_SCALING;
@@ -444,7 +448,7 @@ public class NavisensMaps extends Fragment implements NavisensPlugin {
                                 motionDna.getID(),
                                 y,
                                 x,
-                                motionDna.getMotion().primaryMotion.ordinal()),
+                                motionDna.getMotion().motionType.ordinal()),
                         null
                 );
                 this.webview.evaluateJavascript(
@@ -453,7 +457,7 @@ public class NavisensMaps extends Fragment implements NavisensPlugin {
                                 y,
                                 x,
                                 h,
-                                motionDna.getMotion().primaryMotion.ordinal()),
+                                motionDna.getMotion().motionType.ordinal()),
                         null
                 );
             } else {
@@ -474,7 +478,7 @@ public class NavisensMaps extends Fragment implements NavisensPlugin {
                                     motionDna.getID(),
                                     location.globalLocation.latitude,
                                     location.globalLocation.longitude,
-                                    motionDna.getMotion().primaryMotion.ordinal()),
+                                    motionDna.getMotion().motionType.ordinal()),
                             null
                     );
                 }
@@ -484,7 +488,7 @@ public class NavisensMaps extends Fragment implements NavisensPlugin {
                                 location.globalLocation.latitude,
                                 location.globalLocation.longitude,
                                 location.heading,
-                                motionDna.getMotion().primaryMotion.ordinal()),
+                                motionDna.getMotion().motionType.ordinal()),
                         null
                 );
             }

@@ -41,15 +41,18 @@ public class NaviShare implements NavisensPlugin {
      *
      * @param host server ip
      * @param port server port
+     * @return a reference to this NaviShare
      */
     @SuppressWarnings("unused")
-    public void configure(String host, String port) {
+    public NaviShare configure(String host, String port) {
         core.getSettings().overrideHost(null, null);
 
         this.host = host;
         this.port = port;
         this.changed = true;
         this.configured = true;
+
+        return this;
     }
 
     /**
@@ -70,6 +73,7 @@ public class NaviShare implements NavisensPlugin {
                 core.getMotionDna().startUDP(room, host, port);
                 this.connected = true;
             }
+            this.changed = false;
             return true;
         }
         return false;
@@ -135,29 +139,26 @@ public class NaviShare implements NavisensPlugin {
     }
 
     /**
-     * Track a room so you can query its status
+     * Track a room so you can query its status. Call refreshRoomStatus to
+     * receive a new roomStatus event
      *
      * @param room A room to track
      * @return Whether the room was added to be tracked or not
      */
     @SuppressWarnings("unused")
     public boolean trackRoom(String room) {
-        final boolean added = this.rooms.add(room);
-        refreshRoomStatus();
-        return added;
+        return this.rooms.add(room);
     }
 
     /**
-     * Stop tracking a room
+     * Stop tracking a room. Call refreshRoomStatus to receive a new roomStatusEvent
      *
      * @param room A room to stop tracking
      * @return Whether the room was removed from tracking or not
      */
     @SuppressWarnings("unused")
     public boolean untrackRoom(String room) {
-        final boolean removed = this.rooms.remove(room);
-        refreshRoomStatus();
-        return removed;
+        return this.rooms.remove(room);
     }
 
     /**
@@ -168,7 +169,7 @@ public class NaviShare implements NavisensPlugin {
     @SuppressWarnings("unused")
     public boolean refreshRoomStatus() {
         final long now = System.nanoTime();
-        if (now - roomsQueriedAt > QUERY_INTERVAL) {
+        if (connected && now - roomsQueriedAt > QUERY_INTERVAL) {
             roomsQueriedAt = now;
             core.getMotionDna().sendUDPQueryRooms(rooms.toArray(new String[0]));
             return true;
