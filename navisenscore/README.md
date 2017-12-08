@@ -33,6 +33,8 @@ The constructor also requires an activity reference. This is so we can retrieve 
 
 The following methods are provided to help in managing your plugins. The basic operations allow add a plugin or stop a plugin. You should not need to call any other methods in the `NavisensCore`, as most plugins will make all relevant calls for you. Only call methods not listed if you absolutely know what you are doing :D.
 
+The plugin structure is designed to be easily expandable. Check out our tutorials if you are curious in developing your own plugins!
+
 #### `public <T extends NavisensPlugin> T init(Class<T> navisensPlugin, Object... args)`
 
 This is your main entry point for adding and initializing any plugin. While it may seem complicated, this method is actually very simple. Simply pass in the class of the plugin you wish to initialize, and a new object will be returned for you. Internally, we also add multiple hooks for setting up the plugin, but you don't need to worry about that!
