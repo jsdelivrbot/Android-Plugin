@@ -13,7 +13,7 @@ Add the following to your app's dependencies:
 ## Setup
 
 1. No setup is required other than that your device must have internet access.
-2. (Optional) You should set up your own servers if you wish to deploy your application publicly. The open-source server is written in Golang and can be found [here](link).
+2. (Optional) You should set up your own servers if you wish to deploy your application publicly. The open-source server is written in Golang and can be found [here](https://github.com/navisens/NaviServer).
 
 ## API
 
