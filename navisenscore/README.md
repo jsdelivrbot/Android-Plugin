@@ -25,7 +25,7 @@ Add the following to your app's dependencies above all other plugins:
 
 #### `NavisensCore(String devkey, Activity act)`
 
-The `NavisensCore` requires your developer's key in order to function. Please contact us to apply for a developer's key from the [Navisens website](navisens.com) if you do not have one and wish to try out `Navisens MotionDna`.
+The `NavisensCore` requires your developer's key in order to function. Please contact us to apply for a developer's key from [here](https://developer.navisens.com) if you do not have one and wish to try out `Navisens MotionDna`. Also check out the quickstart if you aren't familiar with our SDK tools [here](https://github.com/navisens/NaviDocs).
 
 The constructor also requires an activity reference. This is so we can retrieve the relevant permissions and other app settings, so please make sure to use a valid activity at the time of creation.
 
