@@ -3,7 +3,7 @@
   <groupId>com.navisens</groupId>
   <artifactId>navibeacon</artifactId>
   <versioning>
-    <release>0.2.5</release>
+    <release>0.2.6</release>
     <versions>
       <version>0.1.0</version>
       <version>0.1.1</version>
@@ -14,7 +14,8 @@
       <version>0.2.3</version>
       <version>0.2.4</version>
       <version>0.2.5</version>
+      <version>0.2.6</version>
     </versions>
-    <lastUpdated>20180117234658</lastUpdated>
+    <lastUpdated>20180117235043</lastUpdated>
   </versioning>
 </metadata>
