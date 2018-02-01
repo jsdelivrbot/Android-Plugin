@@ -75,7 +75,7 @@ If currently scanning for beacons, stop doing so until `resumeScanning` is calle
 
 This callback has only one function (below) that must be implemented. If you set a custom callback, simply implement this interface to receive the relevant events. The way this plugin is set up only allows you to set one callback instead of having multiple listeners.
 
-#### `void onBeaconResponded(Beacon beacon, Double latitude, Double longitude, Double heading)`
+#### `void onBeaconResponded(org.altbeacon.beacon.Beacon beacon, Double latitude, Double longitude, Double heading)`
 
 This is the callback that must be implemented to execute custom behavior. The `beacon` parameter is an AltBeacon beacon and provides useful methods to receive information about the signal strength such as `getId1`, `getRSSI`, and `getDistance`. You may also choose to write custom estimation or otherwise scale the values as necessary to match your own beacon specificiations. The `latitude`, `longitude`, and `heading` parameters are the same ones that you provided when you called `addBeacon`. They are here purely for convenience and do not need to be used. Here is the code for the Default implementation:
 
