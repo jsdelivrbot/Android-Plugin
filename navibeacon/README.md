@@ -24,7 +24,7 @@ Add the following to your app's dependencies:
 
 When setting up your beacon, you should record a latitude, longitude, and heading that a user would be at and facing. For example, if you have a beacon set up at a front desk, you might record the latitude and longitude of a user standing in front of the front desk, and facing directly at the desk. If you do not add these latitude, longitude, and heading readings, then you should manually configure a callback to respond to beacon ranging.
 
-Also note that the computed distances when using beacons are not very accurate unless taken over multiple samples, and thus there is some expected latency. The user should stay within range of the beacon for at least 3 seconds before the signal is stable enough for usage. If you implement a custom callback, you may choose to compute your own estimations with less latency at the expense for less accuracy.
+Also note that the computed distances when using beacons are not very accurate unless taken over multiple samples, and thus there is some expected latency. The user should stay within range of the beacon for at least 5 seconds before the signal is stable enough for usage. If you implement a custom callback, you may choose to compute your own estimations with less latency at the expense for less accuracy.
 
 ## Initialization
 
