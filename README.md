@@ -55,3 +55,7 @@ Quick and easy maps support built upon [leafletjs](http://leafletjs.com)
 #### [NaviShare](navishare)
 
 Wrapper which makes it easy to connect to servers and share location or even raw data between devices.
+
+#### [NaviBeacon](navibeacon)
+
+Adds support for syncing your location with beacons using the [Altbeacon](https://github.com/AltBeacon/android-beacon-library) specifications.
