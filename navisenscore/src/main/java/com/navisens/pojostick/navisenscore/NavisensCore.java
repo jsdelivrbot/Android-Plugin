@@ -20,17 +20,20 @@ import java.util.Set;
 /**
  * Created by Joseph on 9/29/17.
  * <p>
- * Navisens Core
+ *     Navisens Core plugin manager
+ * </p>
  */
 
 public class NavisensCore {
 
+    @SuppressWarnings("unused")
     public static final int NOTHING      = 0,
                             MOTION_DNA   = 1,
                             NETWORK_DNA  = 2,
                             NETWORK_DATA = 4,
                             PLUGIN_DATA  = 8,
-                            ERRORS       = 16;
+                            ERRORS       = 16,
+                            ALL          = 31;
 
     private static final int REQUEST_MDNA_PERMISSIONS = 1;
 
@@ -146,8 +149,7 @@ public class NavisensCore {
     public void remove(com.navisens.pojostick.navisenscore.NavisensPlugin plugin) {
         if (plugins.contains(plugin)) {
             plugins.remove(plugin);
-            for (int i = 1; i <= ERRORS; i <<= 1)
-                subscribers.get(i).remove(plugin);
+            unsubscribe(plugin, ALL);
         }
     }
 
@@ -186,6 +188,30 @@ public class NavisensCore {
         for (int i = 1; i <= ERRORS; i <<= 1) {
             if ((i & which) > 0) {
                 subscribers.get(i).add(plugin);
+            }
+        }
+    }
+
+    /**
+     * Stop listening for updates on specified channels.
+     * <br>
+     *     Select from:
+     *     <ul>
+     *         <li>{@link #MOTION_DNA}</li>
+     *         <li>{@link #NETWORK_DNA}</li>
+     *         <li>{@link #NETWORK_DATA}</li>
+     *         <li>{@link #PLUGIN_DATA}</li>
+     *         <li>{@link #ERRORS}</li>
+     *     </ul>
+     *
+     * @param plugin this plugin
+     * @param which channels to terminate or'd together
+     */
+    @SuppressWarnings("unused")
+    public void unsubscribe(com.navisens.pojostick.navisenscore.NavisensPlugin plugin, int which) {
+        for (int i = 1; i <= ERRORS; i <<= 1) {
+            if ((i & which) > 0) {
+                subscribers.get(i).remove(plugin);
             }
         }
     }
@@ -368,6 +394,7 @@ public class NavisensCore {
             motionDna.setBinaryFileLoggingEnabled(true);
             motionDna.setCallbackUpdateRateInMs(settings.callbackRate != null ? settings.callbackRate : 100);
             motionDna.setExternalPositioningState(settings.positioningMode != null ? settings.positioningMode : MotionDna.ExternalPositioningState.HIGH_ACCURACY);
+            motionDna.setMapCorrectionEnabled(true);
             motionDna.setNetworkUpdateRateInMs(settings.networkRate != null ? settings.networkRate : 100);
             motionDna.setPowerMode(settings.powerMode != null ? settings.powerMode : MotionDna.PowerConsumptionMode.PERFORMANCE);
             ActivityCompat.requestPermissions(this.activity, MotionDnaApplication.needsRequestingPermissions(), REQUEST_MDNA_PERMISSIONS);
@@ -413,6 +440,7 @@ public class NavisensCore {
 
         @Override
         public void reportError(MotionDna.ErrorCode errorCode, String s) {
+//            System.err.println(s);
             for (com.navisens.pojostick.navisenscore.NavisensPlugin plugin : subscribers.get(ERRORS)) {
                 plugin.reportError(errorCode, s);
             }
