@@ -10,5 +10,5 @@ import org.altbeacon.beacon.Beacon;
  */
 
 public interface NaviBeaconCallback {
-    public void onBeaconResponded(Beacon beacon, Double latitude, Double longitude, Double heading);
+    public void onBeaconResponded(Beacon beacon, Double latitude, Double longitude, Double heading, Integer floor);
 }
