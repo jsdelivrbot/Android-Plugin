@@ -115,7 +115,7 @@ public class NaviBeaconService extends Service implements BeaconConsumer, RangeN
                 for (Beacon rBeacon : rBeacons) {
                     if (beacons.containsKey(rBeacon.getId1()) && callback != null) {
                         NaviBeacon.NaviBeaconData data = beacons.get(rBeacon.getId1());
-                        callback.onBeaconResponded(rBeacon, data.latitude, data.longitude, data.heading);
+                        callback.onBeaconResponded(rBeacon, data.latitude, data.longitude, data.heading, data.floor);
                     }
                 }
             }
