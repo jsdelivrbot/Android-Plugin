@@ -2,12 +2,12 @@
 
 This plugin helps facilitate connecting with nearby beacons and allows automatically initializing user location with beacons, or doing custom actions upon entering beacon range.
 
-The latest stable version is `0.7.0`, and it is built on top of Android SDK version `1.0.0-SNAPSHOT`.
+The latest stable version is `0.8.0`, and it is built on top of Android SDK version `1.0.0-SNAPSHOT`.
 
 Add the following to your app's dependencies:
 
 ```gradle
-    compile 'com.navisens:navibeacon:0.7.0'
+    compile 'com.navisens:navibeacon:0.8.0'
 ```
 
 ## Setup
@@ -41,7 +41,7 @@ protected void onCreate(Bundle savedInstanceState) {
 }
 ```
 
-#### `NaviBeacon addBeacon(org.altbeacon.beacon.Identifier id, Double latitude, Double longitude, Double heading)`
+#### `NaviBeacon addBeacon(org.altbeacon.beacon.Identifier id, Double latitude, Double longitude, Double heading, Integer floor)`
 
 This method allows you to add a beacon so the plugin will begin tracking and attempting to range for that beacon. The `id` is a format specified by AltBeacon. Here is an example of how to set an `Identifier`:
 
@@ -49,7 +49,7 @@ This method allows you to add a beacon so the plugin will begin tracking and att
   Identifier.fromUuid(UUID.fromString("01234567-89AB-CDEF-0123-456789ABCDEF"))
 ```
 
-The `latitude`, `longitude`, and `heading` parameters are nullable. If the heading is null, then only the latitude and longitude will be used. If either of latitude and longitude are null, then a location will not be initialized (but a heading may still be set). The default behavior will set the device location to the parameters provided. If you wish to do custom actions (for example greeting the user upon entering beacon range), you should look at the [`setBeaconCallback`](#navibeacon-setbeaconcallbacknavibeaconcallback-navibeaconcallback) method.
+The `latitude`, `longitude`, `heading`, and `floor` parameters are nullable. If the heading is null, then only the latitude and longitude will be used. If either of latitude and longitude are null, then a location will not be initialized (but a heading may still be set). The default behavior will set the device location to the parameters provided. The floor will be set if there is a non-null floor number. If you wish to do custom actions (for example greeting the user upon entering beacon range), you should look at the [`setBeaconCallback`](#navibeacon-setbeaconcallbacknavibeaconcallback-navibeaconcallback) method.
 
 #### `NaviBeacon setScanningPeriod(long period, long delay)`
 
@@ -75,7 +75,7 @@ If currently scanning for beacons, stop doing so until `resumeScanning` is calle
 
 This callback has only one function (below) that must be implemented. If you set a custom callback, simply implement this interface to receive the relevant events. The way this plugin is set up only allows you to set one callback instead of having multiple listeners.
 
-#### `void onBeaconResponded(org.altbeacon.beacon.Beacon beacon, Double latitude, Double longitude, Double heading)`
+#### `void onBeaconResponded(org.altbeacon.beacon.Beacon beacon, Double latitude, Double longitude, Double heading, Integer floor)`
 
 This is the callback that must be implemented to execute custom behavior. The `beacon` parameter is an AltBeacon beacon and provides useful methods to receive information about the signal strength such as `getId1`, `getRSSI`, and `getDistance`. You may also choose to write custom estimation or otherwise scale the values as necessary to match your own beacon specificiations. The `latitude`, `longitude`, and `heading` parameters are the same ones that you provided when you called `addBeacon`. They are here purely for convenience and do not need to be used. Here is the code for the Default implementation:
 
@@ -84,7 +84,7 @@ public class DefaultNaviBeaconCallback implements NaviBeaconCallback {
     boolean resetRequired = true;
 
     @Override
-    public void onBeaconResponded(Beacon beacon, Double latitude, Double longitude, Double heading) {
+    public void onBeaconResponded(Beacon beacon, Double latitude, Double longitude, Double heading, Integer floor) {
         if (beacon.getDistance() < THRESHOLD) {                   // You must be within THRESHOLD distance from beacon
             if (core != null && resetRequired) {                  // Prevent continuously setting of the device location
                 resetRequired = false;
@@ -93,6 +93,9 @@ public class DefaultNaviBeaconCallback implements NaviBeaconCallback {
                 }
                 if (heading != null) {
                     core.getMotionDna().setHeadingInDegrees(heading);
+                }
+                if (floor != null) {
+                    core.getMotionDna().setFloorNumber(floor);
                 }
             }
         } else if (beacon.getDistance() > THRESHOLD + MARGIN){    // User has left the beacon's margin
