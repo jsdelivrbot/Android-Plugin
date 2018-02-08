@@ -4,6 +4,8 @@ This repo adds support for additional features on top of our [MotionDna SDK](htt
 
 Make sure to complete setup of the Android SDK before proceeding with installing plugins.
 
+All of the source code is provided, so if there are features that you need or would like changed, feel free to write your own plugins too, using the provided source as starter if necessary! If you are interested in publishing your own plugins, check out our tutorials [here](https://github.com/navisens/NaviDocs/tree/master/Tutorials).
+
 ## Setup
 
 Plugins are compiled into your project by including the following repository in your project `build.gradle`
