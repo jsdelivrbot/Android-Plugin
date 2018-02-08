@@ -75,10 +75,11 @@ public class NaviBeacon implements NavisensPlugin {
      * @param latitude (optional) the latitude of a user standing near the beacon
      * @param longitude (optional) the longitude of a user standing near the beacon
      * @param heading (optional) the heading of a user standing near the beacon
+     * @param floor (optional) the floor number of a user standing near the beacon
      * @return A reference to this object
      */
-    public NaviBeacon addBeacon(Identifier id, Double latitude, Double longitude, Double heading) {
-        beacons.add(new NaviBeaconData(id, latitude, longitude, heading));
+    public NaviBeacon addBeacon(Identifier id, Double latitude, Double longitude, Double heading, Integer floor) {
+        beacons.add(new NaviBeaconData(id, latitude, longitude, heading, floor));
         return this;
     }
 
@@ -95,6 +96,24 @@ public class NaviBeacon implements NavisensPlugin {
         period = p;
         between = b;
         return this;
+    }
+
+    /**
+     * Resume scanning for beacons if it was paused.
+     */
+    public void resumeScanning() {
+        if (naviBeaconService != null) {
+            naviBeaconService.start();
+        }
+    }
+
+    /**
+     * Pause scanning of beacons to save battery.
+     */
+    public void pauseScanning() {
+        if (naviBeaconService != null) {
+            naviBeaconService.stop();
+        }
     }
 
     /**
@@ -161,7 +180,7 @@ public class NaviBeacon implements NavisensPlugin {
         boolean resetRequired = true;
 
         @Override
-        public void onBeaconResponded(Beacon beacon, Double latitude, Double longitude, Double heading) {
+        public void onBeaconResponded(Beacon beacon, Double latitude, Double longitude, Double heading, Integer floor) {
             if (beacon.getDistance() < THRESHOLD) {
                 if (core != null && resetRequired) {
                     resetRequired = false;
@@ -170,6 +189,9 @@ public class NaviBeacon implements NavisensPlugin {
                     }
                     if (heading != null) {
                         core.getMotionDna().setHeadingInDegrees(heading);
+                    }
+                    if (floor != null) {
+                        core.getMotionDna().setFloorNumber(floor);
                     }
                 }
             } else if (beacon.getDistance() > THRESHOLD + MARGIN){
@@ -183,12 +205,14 @@ public class NaviBeacon implements NavisensPlugin {
         Double latitude;
         Double longitude;
         Double heading;
+        Integer floor;
 
-        NaviBeaconData(Identifier id, Double latitude, Double longitude, Double heading) {
+        NaviBeaconData(Identifier id, Double latitude, Double longitude, Double heading, Integer floor) {
             this.id = id;
             this.latitude = latitude;
             this.longitude = longitude;
             this.heading = heading;
+            this.floor = floor;
         }
     }
 }
