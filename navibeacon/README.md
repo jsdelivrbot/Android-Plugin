@@ -26,6 +26,8 @@ When setting up your beacon, you should record a latitude, longitude, and headin
 
 Also note that the computed distances when using beacons are not very accurate unless taken over multiple samples, and thus there is some expected latency. The user should stay within range of the beacon for at least 5 seconds before the signal is stable enough for usage. If you implement a custom callback, you may choose to compute your own estimations with less latency at the expense for less accuracy.
 
+If you have the `NavisensMaps` plugin in the same project, the `NavisensMaps` project will automagically display the `NaviBeacon` that you have set up so you can see where they are.
+
 Feel free to use the source code provided to extend functionality or customize behavior!
 
 ## Initialization
