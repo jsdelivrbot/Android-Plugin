@@ -23,6 +23,8 @@ When you use `NaviShare`, you are connecting a device to a **room**. A **room** 
 
 All rooms are keyed based on a `String` that you provide. You can only access rooms that are created by other devices of your organization, and you must know the name of any rooms if you wish to join them (i.e. there is no way to get a "list" of rooms, since even the server doesn't know the room names).
 
+Feel free to use the source code provided to extend functionality or customize behavior!
+
 ## Initialization
 
 No additional initialization steps are necessary. Just add the plugin like you would any other plugin. It is recommended you add this plugin after setting up other plugins.
