@@ -2,7 +2,7 @@
 
 This is the core upon which all other Navisens Plugins are built on. The `NavisensCore` is a required component of any project that uses any Navisens Plugins. For a list of plugins available, see [the main page.](https://github.com/navisens/Android-Plugin)
 
-The latest stable version is `3.1.0`, and it is built on top of Android SDK version `1.0.0-SNAPSHOT`.
+The latest stable version is `3.1.0`, and it is built on top of Android SDK version `1` (recommended Android SDK `1.2.0-SNAPSHOT`).
 
 Add the following to your app's dependencies above all other plugins:
 
