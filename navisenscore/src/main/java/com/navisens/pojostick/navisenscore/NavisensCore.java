@@ -34,6 +34,9 @@ public class NavisensCore {
                             PLUGIN_DATA  = 8,
                             ERRORS       = 16,
                             ALL          = 31;
+    public static final int OPERATION_INIT = 0,
+                            OPERATION_ACK  = -1,
+                            OPERATION_STOP = -2;
 
     private static final int REQUEST_MDNA_PERMISSIONS = 1;
 
@@ -159,12 +162,13 @@ public class NavisensCore {
      * The identifier tag should use the plugin's {@code .getClass().getName()} by default, or a custom unique identifier otherwise
      *
      * @param identifier the identifier to tag this data packet
+     * @param operation an integer representing a command or operation or packet id
      * @param data data to broadcast
      */
     @SuppressWarnings("unused")
-    public void broadcast(String identifier, Object data) {
+    public void broadcast(String identifier, int operation, Object... data) {
         for (com.navisens.pojostick.navisenscore.NavisensPlugin plugin : subscribers.get(PLUGIN_DATA)) {
-            plugin.receivePluginData(identifier, data);
+            plugin.receivePluginData(identifier, operation, data);
         }
     }
 
@@ -178,6 +182,7 @@ public class NavisensCore {
      *         <li>{@link #NETWORK_DATA}</li>
      *         <li>{@link #PLUGIN_DATA}</li>
      *         <li>{@link #ERRORS}</li>
+     *         <li>{@link #ALL}</li>
      *     </ul>
      *
      * @param plugin this plugin
@@ -202,6 +207,7 @@ public class NavisensCore {
      *         <li>{@link #NETWORK_DATA}</li>
      *         <li>{@link #PLUGIN_DATA}</li>
      *         <li>{@link #ERRORS}</li>
+     *         <li>{@link #ALL}</li>
      *     </ul>
      *
      * @param plugin this plugin
@@ -277,6 +283,8 @@ public class NavisensCore {
         private MotionDna.PowerConsumptionMode powerMode;
         private String room, host, port;
 
+        private boolean needRestartServices = true;
+
         @SuppressWarnings("unused")
         public void requestARMode() {
             overrideARMode(true);
@@ -307,6 +315,7 @@ public class NavisensCore {
         @SuppressWarnings("unused")
         public void overrideEstimationMode(MotionDna.EstimationMode mode) {
             estimationMode = mode;
+            needRestartServices = true;
         }
 
         @SuppressWarnings("unused")
@@ -358,6 +367,7 @@ public class NavisensCore {
         public void overrideHost(String host, String port) {
             this.host = host;
             this.port = port;
+            needRestartServices = true;
         }
 
         @SuppressWarnings("unused")
@@ -368,6 +378,7 @@ public class NavisensCore {
         @SuppressWarnings("unused")
         public void overrideRoom(String room) {
             this.room = room;
+            needRestartServices = true;
         }
     }
 
@@ -402,7 +413,7 @@ public class NavisensCore {
         }
 
         void startServices() {
-            if (motionDna == null) return;
+            if (motionDna == null || !settings.needRestartServices) return;
             if (settings.estimationMode == MotionDna.EstimationMode.GLOBAL) {
                 motionDna.setLocationNavisens();
             }
@@ -414,6 +425,7 @@ public class NavisensCore {
                     motionDna.startUDP(settings.room, settings.host, settings.port);
                 }
             }
+            settings.needRestartServices = false;
         }
 
         @Override
