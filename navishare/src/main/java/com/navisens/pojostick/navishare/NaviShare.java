@@ -229,7 +229,7 @@ public class NaviShare implements NavisensPlugin {
     }
 
     @Override
-    public void receivePluginData(String s, Object o) {
+    public void receivePluginData(String id, int operator, Object... payload) {
     }
 
     @Override
