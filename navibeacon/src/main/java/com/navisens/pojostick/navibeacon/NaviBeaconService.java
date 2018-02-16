@@ -30,7 +30,7 @@ public class NaviBeaconService extends Service implements BeaconConsumer, RangeN
 
     private BeaconManager beaconManager;
 
-    private Map<Identifier, NaviBeacon.NaviBeaconData> beacons = new HashMap<>();
+    public Map<Identifier, NaviBeacon.NaviBeaconData> beacons = new HashMap<>();
     private Region region = new Region("regions0", null, null, null);
 
     private NaviBeaconCallback callback;
