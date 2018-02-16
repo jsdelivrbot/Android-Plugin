@@ -4,12 +4,12 @@ This plugin provides a simple implementation of the idea of keeping track of nam
 
 We named this plugin Points because it was originally inspired by the "Points Of Interest" or POIs concept of initializing user location. We simply extended the acronym to POInts to make it easier to remember.
 
-The latest stable version is `0.3.1`, and it is built on top of NavisensCore `3.1`.
+The latest stable version is `0.4.0`, and it is built on top of NavisensCore `3.1`.
 
 Add the following to your app's dependencies:
 
 ```gradle
-    compile 'com.navisens:navipoints:0.3.1'
+    compile 'com.navisens:navipoints:0.4.0'
 ```
 
 ## Setup
@@ -47,20 +47,6 @@ Begins keeping track of a point named `id`, and at location `latitude` and `long
 #### `void remove(String id)`
 
 Stops tracking the point with the corresponding `id`, if it exists.
-
-#### `Map<String, NaviPointCoord> pointsInBoundary(double fromLatitude, double fromLongitude, double toLatitude, double toLongitude)`
-
-Returns a mapping of all points in the specified boundaries. Note that latitude and longitudinal boundaries are not rectangular! If you wish to find all points within a certain radius, for example, it is not accurate to simply set the bounds to the latitude and longitude offset by the radius.
-
-The returned map has values `NaviPointCoord`, which contain the following variables for your access:
-
-```java
-public class NaviPointCoord implements Comparable<NaviPointCoord> {
-    public double latitude, longitude;
-    public Double heading;
-    public Integer floor;
-}
-```
 
 #### `void setLocation(String id)`
 
