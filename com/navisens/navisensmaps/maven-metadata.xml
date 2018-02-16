@@ -3,7 +3,7 @@
   <groupId>com.navisens</groupId>
   <artifactId>navisensmaps</artifactId>
   <versioning>
-    <release>1.1.1</release>
+    <release>1.1.2</release>
     <versions>
       <version>0.0.1</version>
       <version>0.0.2</version>
@@ -25,7 +25,8 @@
       <version>1.0.0</version>
       <version>1.1.0</version>
       <version>1.1.1</version>
+      <version>1.1.2</version>
     </versions>
-    <lastUpdated>20180216014528</lastUpdated>
+    <lastUpdated>20180216015114</lastUpdated>
   </versioning>
 </metadata>
