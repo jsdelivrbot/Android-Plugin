@@ -27,6 +27,10 @@ import java.util.Queue;
  */
 @SuppressWarnings("unused")
 public class NaviBeacon implements NavisensPlugin {
+    private static final String PLUGIN_IDENTIFIER = "com.navisens.pojostick.navibeacon",
+                                MAPS_IDENTIFIER = "com.navisens.pojostick.navisensmaps";
+    private static final int OPERATION_ADD = 1;
+
     private static final double THRESHOLD = 0.25;
     private static final double MARGIN = 0.25;
 
@@ -41,6 +45,7 @@ public class NaviBeacon implements NavisensPlugin {
     private Queue<NaviBeaconData> beacons = new LinkedList<>();
 
     private double lastHeading;
+    private boolean mapsExists = false;
 
     public NaviBeacon() {
         serviceConnection = new ServiceConnection() {
@@ -80,6 +85,9 @@ public class NaviBeacon implements NavisensPlugin {
      */
     public NaviBeacon addBeacon(Identifier id, Double latitude, Double longitude, Double heading, Integer floor) {
         beacons.add(new NaviBeaconData(id, latitude, longitude, heading, floor));
+        if (mapsExists && latitude != null && longitude != null) {
+            sendBeacon(latitude, longitude);
+        }
         return this;
     }
 
@@ -128,11 +136,18 @@ public class NaviBeacon implements NavisensPlugin {
         return this;
     }
 
+    private void sendBeacon(double lat, double lng) {
+        if (core != null) {
+            core.broadcast(PLUGIN_IDENTIFIER, OPERATION_ADD, lat, lng);
+        }
+    }
+
     @Override
     public boolean init(NavisensCore navisensCore, Object[] objects) {
         this.core = navisensCore;
 
-        core.subscribe(this, NavisensCore.MOTION_DNA);
+        core.subscribe(this, NavisensCore.MOTION_DNA | NavisensCore.PLUGIN_DATA);
+        core.broadcast(PLUGIN_IDENTIFIER, NavisensCore.OPERATION_INIT);
 
         Intent intent = new Intent(core.getMotionDna().getApplicationContext(), NaviBeaconService.class);
         core.getMotionDna().getApplicationContext().bindService(intent, serviceConnection, Context.BIND_AUTO_CREATE);
@@ -145,6 +160,7 @@ public class NaviBeacon implements NavisensPlugin {
     @Override
     public boolean stop() {
         core.remove(this);
+        core.broadcast(PLUGIN_IDENTIFIER, NavisensCore.OPERATION_STOP);
         if (connected)
             naviBeaconService.stop();
         if (serviceConnection != null)
@@ -169,7 +185,25 @@ public class NaviBeacon implements NavisensPlugin {
     }
 
     @Override
-    public void receivePluginData(String s, Object o) {
+    public void receivePluginData(String id, int operation, Object... payload) {
+        switch (id) {
+            case MAPS_IDENTIFIER:
+                mapsExists = true;
+                if (operation == NavisensCore.OPERATION_INIT ||
+                        operation == NavisensCore.OPERATION_ACK && payload.length == 1 && PLUGIN_IDENTIFIER.equals(payload[0])) {
+                    if (naviBeaconService != null) {
+                        for (NaviBeaconData data : naviBeaconService.beacons.values()) {
+                            sendBeacon(data.latitude, data.longitude);
+                        }
+                    } else {
+                        for (NaviBeaconData data : beacons) {
+                            sendBeacon(data.latitude, data.longitude);
+                        }
+                    }
+                } else if (operation == NavisensCore.OPERATION_STOP) {
+                    mapsExists = false;
+                }
+        }
     }
 
     @Override
@@ -193,6 +227,7 @@ public class NaviBeacon implements NavisensPlugin {
                     if (floor != null) {
                         core.getMotionDna().setFloorNumber(floor);
                     }
+                    core.getSettings().overrideEstimationMode(MotionDna.EstimationMode.LOCAL);
                 }
             } else if (beacon.getDistance() > THRESHOLD + MARGIN){
                 resetRequired = true;
