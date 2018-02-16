@@ -61,3 +61,7 @@ Wrapper which makes it easy to connect to servers and share location or even raw
 #### [NaviBeacon](navibeacon)
 
 Adds support for syncing your location with beacons using the [Altbeacon](https://github.com/AltBeacon/android-beacon-library) specifications.
+
+#### [NaviPoints](navipoints)
+
+Adds a simple way of adding named points and initializing user location based on these points.
