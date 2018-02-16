@@ -17,6 +17,6 @@ public interface NavisensPlugin {
     void receiveMotionDna(MotionDna motionDna);
     void receiveNetworkData(MotionDna motionDna);
     void receiveNetworkData(MotionDna.NetworkCode networkCode, Map<String, ? extends Object> map);
-    void receivePluginData(String identifier, Object data);
+    void receivePluginData(String identifier, int operation, Object... data);
     void reportError(MotionDna.ErrorCode errorCode, String s);
 }
