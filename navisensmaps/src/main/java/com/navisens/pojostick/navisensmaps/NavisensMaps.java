@@ -95,8 +95,12 @@ public class NavisensMaps extends Fragment implements NavisensPlugin {
     private static final String DEFAULT_MAP = "addMap_OpenStreetMap_Mapnik();";
     private static final double LOCAL_SCALING = 1; // Math.pow(2, -17);
 
+    private static final String PLUGIN_IDENTIFIER = "com.navisens.pojostick.navisensmaps",
+                                BEACON_IDENTIFIER = "com.navisens.pojostick.navibeacon",
+                                POINTS_IDENTIFIER = "com.navisens.pojostick.navipoints";
+
     private static MotionDna.LocationStatus lastLocation = MotionDna.LocationStatus.UNINITIALIZED;
-    private static boolean customLocation = false, shouldRestart = true;
+    private static boolean customLocation = false, beerTestShouldRestart = true;
 
     private WebView webView;
     private boolean useDefaultMap = true, useLocal = false, shareLocation = false;
@@ -107,6 +111,8 @@ public class NavisensMaps extends Fragment implements NavisensPlugin {
     private String javascript;
     private double x, y, h;
 
+    private boolean beaconsExist = false, pointsExist = false;
+
     public NavisensMaps() {
         super();
     }
@@ -116,7 +122,8 @@ public class NavisensMaps extends Fragment implements NavisensPlugin {
         this.core = core;
         this.javascript = "RUN(%b);";
 
-        core.subscribe(this, NavisensCore.MOTION_DNA | NavisensCore.NETWORK_DNA);
+        core.subscribe(this, NavisensCore.MOTION_DNA | NavisensCore.NETWORK_DNA | NavisensCore.PLUGIN_DATA);
+        core.broadcast(PLUGIN_IDENTIFIER, NavisensCore.OPERATION_INIT);
 
         core.getSettings().requestGlobalMode();
         core.getSettings().requestPositioningMode(MotionDna.ExternalPositioningState.HIGH_ACCURACY);
@@ -163,7 +170,7 @@ public class NavisensMaps extends Fragment implements NavisensPlugin {
         webSettings.setDomStorageEnabled(true);
         webView.addJavascriptInterface(new JavaScriptInterface(), "JSInterface");
 
-        webView.loadUrl("file:///android_asset/index.0.0.9.html");
+        webView.loadUrl("file:///android_asset/index.0.1.10.html");
 
         this.setRetainInstance(true);
 
@@ -184,8 +191,8 @@ public class NavisensMaps extends Fragment implements NavisensPlugin {
 
             @Override
             public void onPageFinished(WebView view, String url) {
-                if (shouldRestart) {
-                    shouldRestart = false;
+                if (beerTestShouldRestart) {
+                    beerTestShouldRestart = false;
                     restart();
                     core.startServices();
                 }
@@ -299,7 +306,7 @@ public class NavisensMaps extends Fragment implements NavisensPlugin {
      */
     @SuppressWarnings("unused")
     public NavisensMaps preventRestart() {
-        shouldRestart = false;
+        beerTestShouldRestart = false;
         return this;
     }
 
@@ -395,6 +402,7 @@ public class NavisensMaps extends Fragment implements NavisensPlugin {
             webView.evaluateJavascript("STOP();", null);
         webView = null;
         core.remove(this);
+        core.broadcast(PLUGIN_IDENTIFIER, NavisensCore.OPERATION_STOP);
         return true;
     }
 
@@ -429,15 +437,42 @@ public class NavisensMaps extends Fragment implements NavisensPlugin {
             core.getMotionDna().startUDP();
     }
 
+    private void addBeacon(double lat, double lng) {
+        String js = String.format(Locale.ENGLISH, "ADD_BEACON(%f, %f);", lat, lng);
+        if (webView == null) {
+            appendJS(js);
+        } else {
+            webView.evaluateJavascript(js, null);
+        }
+    }
+
+    private void addPoint(String id, double lat, double lng) {
+        String js = String.format(Locale.ENGLISH, "ADD_POINT('%s', %f, %f);", id, lat, lng);
+        if (webView == null) {
+            appendJS(js);
+        } else {
+            webView.evaluateJavascript(js, null);
+        }
+    }
+
+    private void removePoint(String id) {
+        String js = String.format(Locale.ENGLISH, "REMOVE_POINT('%s');", id);
+        if (webView == null) {
+            appendJS(js);
+        } else {
+            webView.evaluateJavascript(js, null);
+        }
+    }
+
     @Override
     public void receiveMotionDna(MotionDna motionDna) {
         if (this.webview != null) {
             MotionDna.Location location = motionDna.getLocation();
 
-            if (motionDna.getMotion() != null) System.out.printf("%s(%s): %s\n", motionDna.getDeviceName(), motionDna.getID(), motionDna.getMotion().motionType);
-            if (motionDna.getMotion() == null || motionDna.getMotion().motionType == null) {
-                return;
-            }
+//            if (motionDna.getMotion() != null) System.out.printf("%s(%s): %s\n", motionDna.getDeviceName(), motionDna.getID(), motionDna.getMotion().motionType);
+//            if (motionDna.getMotion() == null || motionDna.getMotion().motionType == null) {
+//                return;
+//            }
             if (useLocal) {
                 x = location.localLocation.x * LOCAL_SCALING;
                 y = location.localLocation.y * LOCAL_SCALING;
@@ -505,7 +540,37 @@ public class NavisensMaps extends Fragment implements NavisensPlugin {
     }
 
     @Override
-    public void receivePluginData(String s, Object o) {
+    public void receivePluginData(String id, int operation, Object... payload) {
+        switch (id) {
+            case BEACON_IDENTIFIER:
+                beaconsExist = true;
+                if (operation == NavisensCore.OPERATION_INIT) {
+                    core.broadcast(PLUGIN_IDENTIFIER, NavisensCore.OPERATION_ACK, BEACON_IDENTIFIER);
+                } else if (operation == NavisensCore.OPERATION_STOP) {
+                    beaconsExist = false;
+                } else if (payload.length == 2 &&
+                        payload[0] instanceof Double &&
+                        payload[1] instanceof Double) {
+                    addBeacon((double) payload[0], (double) payload[1]);
+                }
+                break;
+            case POINTS_IDENTIFIER:
+                pointsExist = true;
+                if (operation == NavisensCore.OPERATION_INIT) {
+                    core.broadcast(PLUGIN_IDENTIFIER, NavisensCore.OPERATION_ACK, POINTS_IDENTIFIER);
+                } else if (operation == NavisensCore.OPERATION_STOP) {
+                    pointsExist = false;
+                } else if (payload.length == 3 &&
+                        payload[0] instanceof String &&
+                        payload[1] instanceof Double &&
+                        payload[2] instanceof Double) {
+                    if (operation == 1) {
+                        addPoint((String) payload[0], (double) payload[1], (double) payload[2]);
+                    } else if (operation == 2) {
+                        removePoint((String) payload[0]);
+                    }
+                }
+        }
     }
 
     @Override
