@@ -1,15 +1,11 @@
 package com.navisens.pojostick.navipoints;
 
-import android.support.annotation.NonNull;
-
 import com.navisens.motiondnaapi.MotionDna;
 import com.navisens.pojostick.navisenscore.NavisensCore;
 import com.navisens.pojostick.navisenscore.NavisensPlugin;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.SortedMap;
-import java.util.TreeMap;
 
 /**
  * Created by Joseph Chen on 2/14/18.
@@ -24,7 +20,6 @@ public class NaviPoints implements NavisensPlugin {
                              OPERATION_REMOVE = 2;
 
     private final Map<String, NaviPointCoord> locations;
-    private final SortedMap<NaviPointCoord, String> search;
 
     private NavisensCore core;
     private double lastHeading;
@@ -32,7 +27,6 @@ public class NaviPoints implements NavisensPlugin {
 
     public NaviPoints() {
         locations = new HashMap<>();
-        search = new TreeMap<>();
     }
 
     /**
@@ -46,7 +40,6 @@ public class NaviPoints implements NavisensPlugin {
     public void add(String id, double latitude, double longitude, Double heading, Integer floor) {
         NaviPointCoord coord = new NaviPointCoord(latitude, longitude, heading, floor);
         locations.put(id, coord);
-        search.put(coord, id);
         if (mapsExists) {
             sendPoint(OPERATION_ADD, id, latitude, longitude);
         }
@@ -62,36 +55,7 @@ public class NaviPoints implements NavisensPlugin {
             if (mapsExists) {
                 sendPoint(OPERATION_REMOVE, id, coord.latitude, coord.longitude);
             }
-            search.remove(coord);
         }
-    }
-
-    /**
-     * Find all points within the specified boundaries. Note that if getting the boundaries bounding
-     * a circle, for example using the geodesic distance as the radius, the boundaries are not
-     * rectancles, and should be computed correctly to get all requested points.
-     * @param fromLatitude latitude of from coordinate
-     * @param fromLongitude longitude of from coordinate
-     * @param toLatitude latitude of to coordinate
-     * @param toLongitude longitude of to coordinate
-     * @return a map between the names and locations of each point. You can access location of a
-     * NaviPointCoord by accessing the properties latitude and longitude
-     */
-    public Map<String, NaviPointCoord> pointsInBoundary(double fromLatitude, double fromLongitude,
-                                                        double toLatitude, double toLongitude) {
-        NaviPointCoord from = new NaviPointCoord(fromLatitude, fromLongitude, null, null),
-                to = new NaviPointCoord(toLatitude, toLongitude, null, null);
-        if (from.compareTo(to) > 0) {
-            NaviPointCoord temp = from;
-            from = to;
-            to = temp;
-        }
-        Map<NaviPointCoord, String> points = search.subMap(from, to);
-        Map<String, NaviPointCoord> places = new HashMap<>();
-        for (Map.Entry<NaviPointCoord, String> point : points.entrySet()) {
-            places.put(point.getValue(), point.getKey());
-        }
-        return places;
     }
 
     /**
@@ -171,7 +135,7 @@ public class NaviPoints implements NavisensPlugin {
     public void reportError(MotionDna.ErrorCode errorCode, String s) {
     }
 
-    public class NaviPointCoord implements Comparable<NaviPointCoord> {
+    public class NaviPointCoord {
         public double latitude, longitude;
         public Double heading;
         public Integer floor;
@@ -181,17 +145,6 @@ public class NaviPoints implements NavisensPlugin {
             longitude = lng;
             this.heading = heading;
             this.floor = floor;
-        }
-
-        @Override
-        public int compareTo(@NonNull NaviPointCoord other) {
-            double deltaLat = latitude - other.latitude;
-            if (deltaLat < 0) return -1;
-            if (deltaLat > 0) return 1;
-            double deltaLng = longitude - other.longitude;
-            if (deltaLng < 0) return -1;
-            if (deltaLng > 0) return 1;
-            return 0;
         }
     }
 }
