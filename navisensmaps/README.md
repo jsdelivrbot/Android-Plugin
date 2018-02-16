@@ -2,12 +2,12 @@
 
 This is a plugin that provides a quick-and-easy map built upon [leafletjs](http://leafletjs.com/).
 
-The latest stable version is `1.0.0`, and it is built on top of Android SDK version `1.0.0-SNAPSHOT`.
+The latest stable version is `1.1.10`, and it is built on top of NavisensCore `3.1`.
 
 To include the plugin in your code, add the following to your app's dependencies:
 
 ```gradle
-    compile 'com.navisens:navisensmaps:1.0.0'
+    compile 'com.navisens:navisensmaps:1.1.10'
 ```
 
 ## Setup
