@@ -97,7 +97,8 @@ public class NavisensMaps extends Fragment implements NavisensPlugin {
 
     private static final String PLUGIN_IDENTIFIER = "com.navisens.pojostick.navisensmaps",
                                 BEACON_IDENTIFIER = "com.navisens.pojostick.navibeacon",
-                                POINTS_IDENTIFIER = "com.navisens.pojostick.navipoints";
+                                POINTS_IDENTIFIER = "com.navisens.pojostick.navipoints",
+                                NAVIGATOR_IDENTIFIER = "com.navisens.pojostick.navigator";
 
     private static MotionDna.LocationStatus lastLocation = MotionDna.LocationStatus.UNINITIALIZED;
     private static boolean customLocation = false, beerTestShouldRestart = true;
@@ -111,7 +112,7 @@ public class NavisensMaps extends Fragment implements NavisensPlugin {
     private String javascript;
     private double x, y, h;
 
-    private boolean beaconsExist = false, pointsExist = false;
+    private boolean beaconsExist = false, pointsExist = false, navigatorExist;
 
     public NavisensMaps() {
         super();
@@ -170,7 +171,7 @@ public class NavisensMaps extends Fragment implements NavisensPlugin {
         webSettings.setDomStorageEnabled(true);
         webView.addJavascriptInterface(new JavaScriptInterface(), "JSInterface");
 
-        webView.loadUrl("file:///android_asset/index.0.1.10.html");
+        webView.loadUrl("file:///android_asset/index.0.2.0.html");
 
         this.setRetainInstance(true);
 
@@ -438,7 +439,7 @@ public class NavisensMaps extends Fragment implements NavisensPlugin {
     }
 
     private void addBeacon(double lat, double lng) {
-        String js = String.format(Locale.ENGLISH, "ADD_BEACON(%f, %f);", lat, lng);
+        final String js = String.format(Locale.ENGLISH, "ADD_BEACON(%f, %f);", lat, lng);
         if (webView == null) {
             appendJS(js);
         } else {
@@ -447,7 +448,7 @@ public class NavisensMaps extends Fragment implements NavisensPlugin {
     }
 
     private void addPoint(String id, double lat, double lng) {
-        String js = String.format(Locale.ENGLISH, "ADD_POINT('%s', %f, %f);", id, lat, lng);
+        final String js = String.format(Locale.ENGLISH, "ADD_POINT('%s', %f, %f);", id, lat, lng);
         if (webView == null) {
             appendJS(js);
         } else {
@@ -456,11 +457,29 @@ public class NavisensMaps extends Fragment implements NavisensPlugin {
     }
 
     private void removePoint(String id) {
-        String js = String.format(Locale.ENGLISH, "REMOVE_POINT('%s');", id);
+        final String js = String.format(Locale.ENGLISH, "REMOVE_POINT('%s');", id);
         if (webView == null) {
             appendJS(js);
         } else {
             webView.evaluateJavascript(js, null);
+        }
+    }
+
+    public void showRoute(String json) {
+        final String js = String.format(Locale.ENGLISH, "SHOW_ROUTE(%s);", json);
+        if (webView == null) {
+            appendJS(js);
+        } else {
+            webView.evaluateJavascript(js, null);
+        }
+    }
+
+    public void clearRoute() {
+        final String js = "CLEAR_ROUTE();";
+        if (webView == null) {
+            appendJS(js);
+        } else {
+          webView.evaluateJavascript(js, null);
         }
     }
 
@@ -570,6 +589,15 @@ public class NavisensMaps extends Fragment implements NavisensPlugin {
                         removePoint((String) payload[0]);
                     }
                 }
+                break;
+            case NAVIGATOR_IDENTIFIER:
+                navigatorExist = true;
+                if (operation == NavisensCore.OPERATION_STOP) {
+                    navigatorExist = false;
+                } else if (operation == 1 && payload.length == 1 && payload[0] instanceof String) {
+                    showRoute((String) payload[0]);
+                }
+                break;
         }
     }
 

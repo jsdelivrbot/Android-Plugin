@@ -2,7 +2,7 @@
 
 This is a plugin that provides a quick-and-easy map built upon [leafletjs](http://leafletjs.com/).
 
-The latest stable version is `1.1.10`, and it is built on top of NavisensCore `3.1`.
+The latest stable version is `1.2.0`, and it is built on top of NavisensCore `3.1`.
 
 To include the plugin in your code, add the following to your app's dependencies:
 
@@ -200,3 +200,21 @@ Restarts the current viewport cache. This will reset all tracked points, along w
 #### `void stop()`
 
 Terminates `NavisensMaps` indefinitely and removes it from the `NavisensCore`.
+
+## Miscellaneous
+
+Some miscellaneous methods.
+
+#### `void showRoute(String json)`
+
+If you are using the `Navigator` plugin, computing routes may automatically display in the map view too if you specify to do so. You can as an alternative also specify your own route to render. The route must be in following format:
+
+Array of Pairs, where Pairs is defined as an Array of two Doubles. Here, there are `n` points along the polyline. The first point is where the path starts, and the last point terminates the path.
+
+```
+[[latitude_1, longitude_1], [latitude_2, longitude_2], ... , [latitude_n, longitude_n]]
+```
+
+#### `void clearRoute()`
+
+Like above, but instead, you can clear a currently-displayed route. You might consider calling this method when the user has arrived at the end of the path.

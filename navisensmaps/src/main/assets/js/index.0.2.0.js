@@ -1128,6 +1128,17 @@ function REMOVE_POINT(id) {
     }
 }
 
+var naviRoute = L.polyline([]);
+
+function SHOW_ROUTE(route) {
+    CLEAR_ROUTE();
+    naviRoute = L.polyline.antPath(route, {"delay": 500, "dashArray": [1, 25], "weight": 5, "color": "TRANSPARENT", "pulseColor": NAVISENS_ORANGE}).addTo(map);
+}
+
+function CLEAR_ROUTE() {
+    naviRoute.removeFrom(map);
+}
+
 function RUN(needsGPS) {
     if (map)
         map.remove();
