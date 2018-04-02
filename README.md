@@ -6,6 +6,8 @@ Make sure to complete setup of the Android SDK before proceeding with installing
 
 All of the source code is provided, so if there are features that you need or would like changed, feel free to write your own plugins too, using the provided source as starter if necessary! If you are interested in publishing your own plugins, check out our tutorials [here](https://github.com/navisens/NaviDocs/tree/master/Tutorials).
 
+The plugins system is an extension of the base functionality provided by the MotionDna SDK, and serves to make developing apps easier for you. While it's implementation is designed to work in the general case, it is advised that you customize or even use the native SDK if you have very specific needs not provided such as real-time performance-critical work.
+
 ## Setup
 
 Plugins are compiled into your project by including the following repository in your project `build.gradle`
