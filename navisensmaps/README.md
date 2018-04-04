@@ -12,7 +12,7 @@ To include the plugin in your code, add the following to your app's dependencies
 
 ## Setup
 
-1. Set up [`NavisensCore`](navisenscore).
+1. Set up [`NavisensCore`](/navisenscore).
 
 2. (Optionally) Add the following to your Manifest:
 ```xml
