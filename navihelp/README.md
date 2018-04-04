@@ -2,12 +2,12 @@
 
 This plugin works with the NaviHelpMe tutorial to demonstrate how to use plugins and build your own!
 
-The latest stable version is `1.1.0`, and it is built on top of NavisensCore `3.1`.
+The latest stable version is `1.1.1`, and it is built on top of NavisensCore `3.1`.
 
 Add the following to your app's dependencies:
 
 ```gradle
-  compile 'com.navisens:navihelp:1.1.0'
+  compile 'com.navisens:navihelp:1.1.1'
 ```
 
 ## Setup
