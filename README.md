@@ -17,6 +17,15 @@ allprojects {
     repositories {
         // ...
 
+        // Repositories for motiondnaapi SDK
+        maven {
+            url 'https://oss.sonatype.org/content/groups/public'
+        }
+        maven {
+            url 'https://maven.fabric.io/public'
+        }
+
+        // Repository for all plugins
         maven {
             url 'https://raw.github.com/navisens/Android-Plugin/repositories'
         }
