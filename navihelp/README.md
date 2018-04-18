@@ -12,7 +12,7 @@ Add the following to your app's dependencies:
 
 ## Setup
 
-1. No additional set up is required.
+1. You will need to add the latest version of `NaviShare` (we used 0.3.0) to use `NaviHelp`.
 
 ## API
 
@@ -22,7 +22,7 @@ Feel free to use the source code provided to extend functionality or customize b
 
 ## Initialization
 
-There are no initialization methods. Just add it to the `core` to begin!
+There are no initialization methods. When adding it to the `core`, you must provide a reference to a `NaviShare` object!
 
 ```java
 // In your MainActivity
@@ -30,7 +30,8 @@ There are no initialization methods. Just add it to the `core` to begin!
 protected void onCreate(Bundle savedInstanceState) {
   // ...
   NavisensCore core = new NavisensCore(DEV_KEY, this);
-  NaviHelp help = core.init(NaviHelp.class);
+  NaviShare share = core.init(NaviShare.class);
+  NaviHelp help = core.init(NaviHelp.class, share);
 }
 ```
 
