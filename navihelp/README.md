@@ -22,7 +22,7 @@ Feel free to use the source code provided to extend functionality or customize b
 
 ## Initialization
 
-There are no initialization methods. When adding it to the `core`, you must provide a reference to a `NaviShare` object!
+There are no initialization methods. When adding it to the `core`, you must provide a reference to a `NaviShare` object! Since `NaviHelp` is a fragment, we can add it to our view by simply adding the fragment to the main content container.
 
 ```java
 // In your MainActivity
@@ -32,6 +32,7 @@ protected void onCreate(Bundle savedInstanceState) {
   NavisensCore core = new NavisensCore(DEV_KEY, this);
   NaviShare share = core.init(NaviShare.class);
   NaviHelp help = core.init(NaviHelp.class, share);
+  getFragmentManager().beginTransaction().add(android.R.id.content, help).commit();
 }
 ```
 
