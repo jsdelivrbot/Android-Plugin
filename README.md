@@ -72,7 +72,7 @@ The following is a list of all supported plugins. Special setup instructions and
 
 Quick and easy maps support built upon [leafletjs](http://leafletjs.com)
 
-<img src="https://github.com/navisens/NaviDocs/blob/resources/Images/Manual.gif" alt="NaviBeacons" width=250/>
+<img src="https://github.com/navisens/NaviDocs/blob/resources/Images/Manual.gif" alt="Manual Initialization" width=250/>
 
 -----
 
@@ -86,7 +86,7 @@ Wrapper which makes it easy to connect to servers and share location or even raw
 
 Adds support for syncing your location with beacons using the [Altbeacon](https://github.com/AltBeacon/android-beacon-library) specifications.
 
-<img src="https://github.com/navisens/NaviDocs/blob/resources/Images/Beacons.gif" alt="NaviBeacons" width=250/>
+<img src="https://github.com/navisens/NaviDocs/blob/resources/Images/Beacons.gif" alt="Beacons Initialization" width=250/>
 
 -----
 
@@ -94,10 +94,12 @@ Adds support for syncing your location with beacons using the [Altbeacon](https:
 
 Adds a simple way of adding named points and initializing user location based on these points.
 
-<img src="https://github.com/navisens/NaviDocs/blob/resources/Images/POI.gif" alt="NaviBeacons" width=250/>
+<img src="https://github.com/navisens/NaviDocs/blob/resources/Images/POI.gif" alt="Points of Interest Initialization" width=250/>
 
 -----
 
 #### [Navigator](navigator)
 
 Adds a simple path generator that can be rendered with our Maps plugin.
+
+<img src="https://github.com/navisens/NaviDocs/blob/resources/Images/Navigator.gif" alt="Navigator routing" width=250/>
