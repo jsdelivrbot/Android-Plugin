@@ -2,7 +2,7 @@
 
 This is a plugin that provides a quick-and-easy map built upon [leafletjs](http://leafletjs.com/).
 
-The latest stable version is `1.2.0`, and it is built on top of NavisensCore `3.1`.
+The latest stable version is `1.3.0`, and it is built on top of NavisensCore `3.1`.
 
 To include the plugin in your code, add the following to your app's dependencies:
 
@@ -218,3 +218,32 @@ Array of Pairs, where Pairs is defined as an Array of two Doubles. Here, there a
 #### `void clearRoute()`
 
 Like above, but instead, you can clear a currently-displayed route. You might consider calling this method when the user has arrived at the end of the path.
+
+#### `public NavisensMaps embedLeafletApi(String js)`
+
+The embedLeafletApi method enables you to manipulate the entire javascript subsystem by entering a javascript string that will get executed
+by the internal javascript interpretation engine.
+This enables you to use the internal javascript leaflet map instance and have access to it's full API ranging from geojson to image rendering, as seen in the following example:
+
+#### Image overlay:
+```java
+// Javascript representing image overlay code being inputted into the leaflet api.
+String data = "var imageUrl = 'http://www.lib.utexas.edu/maps/historical/newark_nj_1922.jpg',imageBounds = [[40.712216, -74.22655], [40.773941, -74.12544]];L.imageOverlay(imageUrl, imageBounds).addTo(map);"
+
+maps.embedLeafletApi(data);
+```
+#### GeoJson:
+```java
+// This is geojson being stylized as specified in the LeafLet Api example.
+String data="var myLines = [{\"type\": \"LineString\",\"coordinates\": [[-100, 40], [-105, 45], [-110, 55]]}, {\"type\": \"LineString\",\"coordinates\": [[-105, 40], [-110, 45], [-115, 55]]}];var myStyle ={\"color\": \"#ff7800\",\"weight\": 5,\"opacity\": 0.65};L.geoJSON(myLines, {style: myStyle}).addTo(map);";
+
+// This then gets added to the map instance through the javascript call `addTo(map);` method.
+maps.embedLeafletApi(data);
+```
+
+
+[Geojson examples](https://leafletjs.com/examples/geojson/)
+
+[Image overlay examples](https://leafletjs.com/reference-1.3.2.html#imageoverlay)
+
+And the full Leaflet api can be found [here](https://leafletjs.com/reference-1.3.2.html)

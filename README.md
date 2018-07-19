@@ -38,7 +38,7 @@ Then simply import `NavisensCore` along with any desired plugins (see below for 
 ```gradle
 dependencies {
     // Add all dependencies required of our motiondnaapi SDK. Make sure to use the latest version!
-    compile group: "com.navisens", name: "motiondnaapi", version: "1.2.2-SNAPSHOT", changing: true
+    compile group: "com.navisens", name: "motiondnaapi", version: "1.5.0", changing: true
 
     // Add the core plugin, and any plugins you want too
     compile 'com.navisens:navisenscore:<version>'
