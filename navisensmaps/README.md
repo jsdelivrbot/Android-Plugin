@@ -221,14 +221,12 @@ Like above, but instead, you can clear a currently-displayed route. You might co
 
 #### `public NavisensMaps embedLeafletApi(String js)`
 
-The embedLeafletApi method enables you to manipulate the entire javascript subsystem by entering a javascript string that will get executed
-by the internal javascript interpretation engine.
-This enables you to use the internal javascript leaflet map instance and have access to it's full API ranging from geojson to image rendering, as seen in the following example:
+This enables you to use the internal javascript leaflet map instance and have access to it's full API ranging from geojson to image/video rendering, as seen in the following leaflet api example:
 
 #### Image overlay:
 ```java
 // Javascript representing image overlay code being inputted into the leaflet api.
-String data = "var imageUrl = 'http://www.lib.utexas.edu/maps/historical/newark_nj_1922.jpg',imageBounds = [[40.712216, -74.22655], [40.773941, -74.12544]];L.imageOverlay(imageUrl, imageBounds).addTo(map);"
+String data = "var imageUrl = 'https://www.lib.utexas.edu/maps/historical/newark_nj_1922.jpg',imageBounds = [[40.712216, -74.22655], [40.773941, -74.12544]];L.imageOverlay(imageUrl, imageBounds).addTo(map);"
 
 maps.embedLeafletApi(data);
 ```
@@ -242,8 +240,19 @@ maps.embedLeafletApi(data);
 ```
 
 
+#### Video overlay:
+```java
+// Video overlay javascript code store in a string
+String data = "var videoUrl = \"https://www.mapbox.com/bites/00188/patricia_nasa.mp4\",videoBounds = [[ 32, -130], [ 13, -100]];L.videoOverlay(videoUrl, videoBounds, {autoplay:true, loop:true}).addTo(map);"
+
+maps.embedLeafletApi(data);
+```
+
+
 [Geojson examples](https://leafletjs.com/examples/geojson/)
 
 [Image overlay examples](https://leafletjs.com/reference-1.3.2.html#imageoverlay)
+
+[Video overlay examples](https://leafletjs.com/reference-1.3.2.html#videooverlay-autoplay)
 
 And the full Leaflet api can be found [here](https://leafletjs.com/reference-1.3.2.html)
